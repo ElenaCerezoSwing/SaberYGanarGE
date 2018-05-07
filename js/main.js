@@ -58,6 +58,7 @@ var nextQuestionButton = document.querySelector('.next-question');
 var i = 0;
 
 function nextQuestion() {
+    questionTimer();
     if (i < questions.length) {
         quizQuestion.innerHTML = questions[i].question;
         var answersList = "";
@@ -70,6 +71,18 @@ function nextQuestion() {
 }
 
 nextQuestionButton.addEventListener('click', nextQuestion);
+
+var seconds = 20;
+
+function questionTimer() {
+    seconds--;
+    var timer = document.querySelector('.timer');
+    timer.innerHTML = seconds;
+    if (seconds === 0) {
+        clearInterval(counter);
+    }
+}
+var counter = setInterval(questionTimer, 1000);
 
 
 
