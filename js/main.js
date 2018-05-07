@@ -62,7 +62,7 @@ function nextQuestion() {
         quizQuestion.innerHTML = questions[i].question;
         var answersList = "";
         for (let x = 0; x < questions[i].answers.length; x++) {
-            answersList += '<li>' + questions[i].answers[x].value + '</li>';
+            answersList += '<li class="li-answers"><input id="' + x + '" type="radio"/><label name="' + x + '">' + questions[i].answers[x].value + '</label></li>';
             quizAnswers.innerHTML = answersList;
         }
         i++;
