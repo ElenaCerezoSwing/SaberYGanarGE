@@ -58,6 +58,7 @@ var nextQuestionButton = document.querySelector('.next-question');
 var i = 0;
 
 function nextQuestion() {
+    seconds = 20;
     questionTimer();
     if (i < questions.length) {
         quizQuestion.innerHTML = questions[i].question;
