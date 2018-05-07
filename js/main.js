@@ -55,6 +55,17 @@ var quizQuestion = document.querySelector('.quiz-questions');
 var quizAnswers = document.querySelector('.quiz-answers');
 var nextQuestionButton = document.querySelector('.next-question');
 
+function questionTimer() {
+    seconds--;
+    var timer = document.querySelector('.timer');
+    timer.innerHTML = seconds;
+    if (seconds === 0) {
+        clearInterval(counter);
+        nextQuestion();
+    }
+}
+var counter = setInterval(questionTimer, 1000);
+
 var i = 0;
 
 function nextQuestion() {
@@ -69,6 +80,7 @@ function nextQuestion() {
         }
         i++;
     }
+
 }
 
 nextQuestionButton.addEventListener('click', nextQuestion);
@@ -81,6 +93,7 @@ function questionTimer() {
     timer.innerHTML = seconds;
     if (seconds === 0) {
         clearInterval(counter);
+        nextQuestion();
     }
 }
 var counter = setInterval(questionTimer, 1000);
