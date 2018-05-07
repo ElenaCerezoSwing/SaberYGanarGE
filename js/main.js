@@ -6,7 +6,7 @@ function getPairQuestionAnswers(callback) {
             answers: [
                 { id: 1, value: 'Estela' },
                 { id: 2, value: 'Rita' },
-                { id: 1, value: 'Todas las anteriores son correctas' },
+                { id: 3, value: 'Todas las anteriores son correctas' },
             ],
             correctAnswer: { id: 3 }
         },
@@ -16,7 +16,7 @@ function getPairQuestionAnswers(callback) {
             answers: [
                 { id: 1, value: 'Lusaka' },
                 { id: 2, value: 'Harare' },
-                { id: 1, value: 'Madrid' },
+                { id: 3, value: 'Madrid' },
             ],
             correctAnswer: { id: 2 }
         },
@@ -26,7 +26,7 @@ function getPairQuestionAnswers(callback) {
             answers: [
                 { id: 1, value: 'Adolf' },
                 { id: 2, value: 'Sefard' },
-                { id: 1, value: 'Sigmund' },
+                { id: 3, value: 'Sigmund' },
             ],
             correctAnswer: { id: 3 }
         },
@@ -36,7 +36,7 @@ function getPairQuestionAnswers(callback) {
             answers: [
                 { id: 1, value: 'Guepardo' },
                 { id: 2, value: 'León' },
-                { id: 1, value: 'Tortuga' },
+                { id: 3, value: 'Tortuga' },
             ],
             correctAnswer: { id: 1 }
         }
@@ -55,36 +55,22 @@ var quizQuestion = document.querySelector('.quiz-questions');
 var quizAnswers = document.querySelector('.quiz-answers');
 var nextQuestionButton = document.querySelector('.next-question');
 
-function nextPairQuestionAnswer() {
-    for (let i = 0; i < questions.length; i++) {
+var i = 0;
+
+function nextQuestion() {
+    if (i < questions.length) {
         quizQuestion.innerHTML = questions[i].question;
-        for (let k = 0; k < questions[i].answers.length; k++) {
-            quizAnswers.innerHTML = '<li>' + questions[i].answers[k].value + '</li>';
-        };
-    };
+        var answersList = "";
+        for (let x = 0; x < questions[i].answers.length; x++) {
+            answersList += '<li>' + questions[i].answers[x].value + '</li>';
+            quizAnswers.innerHTML = answersList;
+        }
+        i++;
+    }
 }
 
-nextQuestionButton.addEventListener('click', nextPairQuestionAnswer);
+nextQuestionButton.addEventListener('click', nextQuestion);
 
 
 
 
-// for (let i = 0; i < questions.length; i++) {
-//     setTimeout(function (y) {
-//         console.log(questions[y].question);
-//         console.log(questions[y].answers[0].value);
-//         console.log(questions[y].answers[1].value);
-//         console.log(questions[y].answers[2].value);
-//     }, i * 5000, i);
-// };
-
-
-// for (let i = questions.length; i > 0; i--) {
-//     setTimeout(function (k) {
-//         console.clear(questions[k].question);
-//         console.clear(questions[k].answers[0].value);
-//         console.clear(questions[k].answers[1].value);
-//         console.clear(questions[k].answers[2].value);
-
-//     }, i * 5500, i);
-// };
