@@ -1,7 +1,4 @@
 function application() {
-
-
-
 	function getPairQuestionAnswers(callback) {
 		var serverData = [
 			{
@@ -53,11 +50,7 @@ function application() {
 		questions = data;
 	});
 
-	var quizContainer = document.querySelector('.show-quiz');
-	var quizQuestion = document.querySelector('.quiz-questions');
-	var quizAnswers = document.querySelector('.quiz-answers');
-	var nextQuestionButton = document.querySelector('.next-question');
-
+	var counter;
 	function questionTimer() {
 		seconds--;
 		var timer = document.querySelector('.timer');
@@ -67,10 +60,13 @@ function application() {
 			nextQuestion();
 		}
 	}
-	var counter = setInterval(questionTimer, 1000);
 
 	var i = 0;
 	function nextQuestion() {
+		var quizContainer = document.querySelector('.show-quiz');
+		var quizQuestion = document.querySelector('.quiz-questions');
+		var quizAnswers = document.querySelector('.quiz-answers');
+
 		seconds = 20;
 		questionTimer();
 		if (i < questions.length) {
@@ -85,16 +81,20 @@ function application() {
 
 	}
 
-	nextQuestionButton.addEventListener('click', nextQuestion);
 
-	var seconds = 20;
-	questionTimer();
-
-	var counter = setInterval(questionTimer, 1000);
 
 
 
 	function start() {
+		counter = setInterval(questionTimer, 1000);
+
+		var nextQuestionButton = document.querySelector('.next-question');
+		nextQuestionButton.addEventListener('click', nextQuestion);
+
+		var seconds = 20;
+		questionTimer();
+		counter = setInterval(questionTimer, 1000);
+
 
 	}
 
