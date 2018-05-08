@@ -3,10 +3,37 @@
 	margin: 0;
 	box-sizing: border-box;
 }
+.header-title {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
 
+.wrapper {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr 1fr 1fr;
+}
+
+.show-quiz {
+	position: relative;
+}
+.timer {
+	position: absolute;
+	top: 20px;
+  right: 100px;
+}
 
 
 
 .li-answers {
-    list-style: none;
+  list-style: none;
+}
+
+@media all and (min-width: 768px) {
+	.wrapper {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
+	}
 }
