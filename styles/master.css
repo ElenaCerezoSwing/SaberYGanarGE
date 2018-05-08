@@ -30,6 +30,10 @@
 .li-answers {
   list-style: none;
 }
+.msg {
+	font-size: 24px;
+	color: blue;
+}
 .statistics {
 	margin-top: 50px;
 }

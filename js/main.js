@@ -64,8 +64,10 @@ function application() {
 
 	var i = 0;
 	var quizQuestion = document.querySelector('.quiz-questions');
+	var msg = document.querySelector('.msg');
 
 	function nextQuestion() {
+		msg.innerHTML = '';
 		var quizContainer = document.querySelector('.show-quiz');
 		var quizAnswers = document.querySelector('.quiz-answers');
 
@@ -90,9 +92,9 @@ function application() {
 			if (currentAnswers[i].checked) {
 				currentAnswerId = i;
 				if (questions[currentQuestionId].correctAnswer.id == currentAnswerId) {
-					console.log ('Es correcto!');
+					msg.innerHTML = '¡Es correcto!';
 				} else {
-					console.log('Es falso!');
+					msg.innerHTML = '¡Es falso!';
 
 				}
 				console.log(currentAnswerId);
