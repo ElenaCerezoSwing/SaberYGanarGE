@@ -67,7 +67,7 @@ function application() {
 		var quizQuestion = document.querySelector('.quiz-questions');
 		var quizAnswers = document.querySelector('.quiz-answers');
 
-		seconds = 20;
+		seconds = 5;
 		questionTimer();
 		if (i < questions.length) {
 			quizQuestion.innerHTML = questions[i].question;
@@ -91,7 +91,7 @@ function application() {
 		var nextQuestionButton = document.querySelector('.next-question');
 		nextQuestionButton.addEventListener('click', nextQuestion);
 
-		var seconds = 20;
+		seconds = 5;
 		questionTimer();
 		counter = setInterval(questionTimer, 1000);
 
