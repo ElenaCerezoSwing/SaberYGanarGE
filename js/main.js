@@ -86,16 +86,17 @@ function nextQuestion() {
 nextQuestionButton.addEventListener('click', nextQuestion);
 
 var seconds = 20;
+questionTimer();
 
-function questionTimer() {
-    seconds--;
-    var timer = document.querySelector('.timer');
-    timer.innerHTML = seconds;
-    if (seconds === 0) {
-        clearInterval(counter);
-        nextQuestion();
-    }
-}
+// function questionTimer() {
+//     seconds--;
+//     var timer = document.querySelector('.timer');
+//     timer.innerHTML = seconds;
+//     if (seconds === 0) {
+//         clearInterval(counter);
+//         nextQuestion();
+//     }
+// }
 var counter = setInterval(questionTimer, 1000);
 
 
