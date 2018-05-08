@@ -50,13 +50,13 @@ function application() {
 		questions = data;
 	});
 
-	var counter;
+
 	function questionTimer() {
 		seconds--;
 		var timer = document.querySelector('.timer');
 		timer.innerHTML = seconds;
 		if (seconds === 0) {
-			clearInterval(counter);
+			seconds = 5;
 			nextQuestion();
 		}
 	}
@@ -67,8 +67,6 @@ function application() {
 		var quizQuestion = document.querySelector('.quiz-questions');
 		var quizAnswers = document.querySelector('.quiz-answers');
 
-		seconds = 5;
-		questionTimer();
 		if (i < questions.length) {
 			quizQuestion.innerHTML = questions[i].question;
 			var answersList = "";
@@ -78,24 +76,13 @@ function application() {
 			}
 			i++;
 		}
-
 	}
 
-
-
-
-
 	function start() {
-		counter = setInterval(questionTimer, 1000);
-
+		seconds = 5;
+		var counter = setInterval(questionTimer, 1000);
 		var nextQuestionButton = document.querySelector('.next-question');
 		nextQuestionButton.addEventListener('click', nextQuestion);
-
-		seconds = 5;
-		questionTimer();
-		counter = setInterval(questionTimer, 1000);
-
-
 	}
 
 
