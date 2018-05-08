@@ -2,29 +2,49 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="styles/master.css">
-    <title>Saber y Ganar</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="styles/master.css">
+	<title>Saber y Ganar</title>
 </head>
 
 <body>
-    <header>Saber y Ganar... un programa presentado por Jordi Hurtado</header>
+	<header>
+		<h1 class="header-title">Saber y Ganar... un programa presentado por Jordi Hurtado</h1>
+	</header>
 
-    <main>
-        <button class="next-question">Next question</button>
+	<main>
+		<section class="quiz">
+			<div class="show-quiz">
+				<label class="timer">20</label>
+				<h2 class="quiz-questions"></h2>
+				<ul class="quiz-answers"></ul>
+			</div>
+			<div class="msg"></div>
+			<div class="buttons">
+				<button class="send-answer">Enviar respuesta</button>
+				<button class="next-question">Siguiente pregunta</button>
+			</div>
+		</section>
+		<section class="scores">
+			<h2 class="scores-title">Marcadores</h2>
 
-
-        <div class="show-quiz">
-            <label class="timer">20</label>
-            <h4 class="quiz-questions"></h4>
-            <ul class="quiz-answers"></ul>
-        </div>
-
-    </main>
-
-    <script src="js/main.js"></script>
+		</section>
+		<section class="statistics">
+			<h2 class="statistics-title">Estadísticas</h2>
+			<h4 class="statistics-items">
+				<span class="statistics-time"></span>
+			</h4>
+			<h4 class="statistics-items">
+				<span class="correct-answer"></span>
+			</h4>
+			<h4 class="statistics-items">
+				<span class="failed-answer"></span>
+			</h4>
+		</section>
+	</main>
+	<script src="js/main.js"></script>
 </body>
 
 </html>
