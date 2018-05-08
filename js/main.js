@@ -73,7 +73,7 @@ function nextQuestion() {
         quizQuestion.innerHTML = questions[i].question;
         var answersList = "";
         for (let x = 0; x < questions[i].answers.length; x++) {
-            answersList += '<li class="li-answers"><input id="' + x + '" type="radio" name="answers"/><label for="' + x + '">' + questions[i].answers[x].value + '</label></li>';
+            answersList += '<li class="li-answers"><input id="' + (x + 1) + '" type="radio" name="answers"/><label for="' + (x + 1) + '">' + questions[i].answers[x].value + '</label></li>';
             quizAnswers.innerHTML = answersList;
         }
         i++;
@@ -87,3 +87,7 @@ var seconds = 20;
 questionTimer();
 
 var counter = setInterval(questionTimer, 1000);
+
+//
+// const option = document.querySelector('input[name="anwers"]:checked').value;
+// console.log('option ', option);
