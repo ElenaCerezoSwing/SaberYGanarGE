@@ -45,21 +45,27 @@ function application() {
         callback(serverData);
     }
 
+    // variables globales inicialmente asignadas:
     var questions = [];
+    var i = 0;
+    // variables globales declaradas:
+    var answerTime;
+    var timerId;
+    var seconds;
+    // variables identificadoras de elementos de la página:
+    var quizQuestion = document.querySelector('.quiz-questions');
+    var msg = document.querySelector('.msg');
 
+    // asignación de las preguntas
     getPairQuestionAnswers(function (data) {
         questions = data;
     });
 
-    var i = 0;
-    // var seconds;
-    var quizQuestion = document.querySelector('.quiz-questions');
-    var msg = document.querySelector('.msg');
-    var timer = document.querySelector('.timer');
 
+    // temporizador
     function questionTimer() {
         seconds--;
-        // var timer = document.querySelector('.timer');
+        var timer = document.querySelector('.timer');
         timer.innerHTML = seconds;
         if (seconds === 0) {
             // seconds = 5;
@@ -67,14 +73,18 @@ function application() {
         }
     }
 
-
-
+    // calculadora de tiempo de respuesta
+    function getAnswerTime() {
+        answerTime = 100 - seconds;
+        console.log(answerTime);
+    }
+    // función que pinta la pregunta
     function nextQuestion() {
         msg.innerHTML = '';
         var quizContainer = document.querySelector('.show-quiz');
         var quizAnswers = document.querySelector('.quiz-answers');
         if (i >= questions.length) {
-            clearInterval(seconds);
+            clearInterval(timerId);
             timer.innerHTML = '';
         }
 
@@ -92,6 +102,7 @@ function application() {
 
     }
 
+    // función que compara la respuesta
     function checkOption() {
         var currentAnswers = document.getElementsByTagName('input');
         var currentAnswerId;
@@ -113,9 +124,12 @@ function application() {
 
     }
 
+    // función que inicializa
     function start() {
-        var seconds = '';
-        var counter = setInterval(questionTimer, 1000);
+        seconds = '';
+        timerId = setInterval(questionTimer, 1000);
+        var timer = document.querySelector('.timer');
+        timer.innerHTML = '';
         var nextQuestionButton = document.querySelector('.next-question');
         var sendAnswerButton = document.querySelector('.send-answer');
         sendAnswerButton.addEventListener('click', checkOption);
