@@ -81,7 +81,7 @@ function application() {
         if (i < questions.length) {
             seconds = 5;
             quizQuestion.innerHTML = questions[i].question;
-            quizQuestion.setAttribute('id', question[i].id);
+            quizQuestion.setAttribute('id', questions[i].id);
             var answersList = "";
             for (let x = 0; x < questions[i].answers.length; x++) {
                 answersList += '<li id="' + x + '" class="li-answers"><input id="' + x + '" type="radio" name="answers"/><label for="' + x + '">' + questions[i].answers[x].value + '</label></li>';
@@ -114,7 +114,7 @@ function application() {
     }
 
     function start() {
-        var seconds;
+        var seconds = '';
         var counter = setInterval(questionTimer, 1000);
         var nextQuestionButton = document.querySelector('.next-question');
         var sendAnswerButton = document.querySelector('.send-answer');
@@ -125,6 +125,7 @@ function application() {
     return {
         start: start,
         nextQuestion: nextQuestion,
-        questionTimer: questionTimer
+        questionTimer: questionTimer,
+        checkOption: checkOption
     }
 }
