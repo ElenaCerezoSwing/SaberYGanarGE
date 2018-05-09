@@ -51,31 +51,37 @@ function application() {
         questions = data;
     });
 
-
-    function questionTimer() {
-        seconds--;
-        var timer = document.querySelector('.timer');
-        timer.innerHTML = seconds;
-        if (seconds === 0) {
-            seconds = 100;
-            nextQuestion();
-        }
-    }
-
     var i = 0;
     // var seconds;
     var quizQuestion = document.querySelector('.quiz-questions');
     var msg = document.querySelector('.msg');
+    var timer = document.querySelector('.timer');
+
+    function questionTimer() {
+        seconds--;
+        // var timer = document.querySelector('.timer');
+        timer.innerHTML = seconds;
+        if (seconds === 0) {
+            // seconds = 5;
+            nextQuestion();
+        }
+    }
+
+
 
     function nextQuestion() {
         msg.innerHTML = '';
-        seconds = 100;
         var quizContainer = document.querySelector('.show-quiz');
         var quizAnswers = document.querySelector('.quiz-answers');
+        if (i >= questions.length) {
+            clearInterval(seconds);
+            timer.innerHTML = '';
+        }
 
         if (i < questions.length) {
+            seconds = 5;
             quizQuestion.innerHTML = questions[i].question;
-            quizQuestion.setAttribute('id', i);
+            quizQuestion.setAttribute('id', question[i].id);
             var answersList = "";
             for (let x = 0; x < questions[i].answers.length; x++) {
                 answersList += '<li id="' + x + '" class="li-answers"><input id="' + x + '" type="radio" name="answers"/><label for="' + x + '">' + questions[i].answers[x].value + '</label></li>';
@@ -83,6 +89,7 @@ function application() {
             }
             i++;
         }
+
     }
 
     function checkOption() {
@@ -92,7 +99,7 @@ function application() {
 
         for (var i = 0; i < currentAnswers.length; i++) {
             if (currentAnswers[i].checked) {
-                currentAnswerId = i;
+                currentAnswerId = currentAnswers[i].id;
                 if (questions[currentQuestionId].correctAnswer.id == currentAnswerId) {
                     msg.innerHTML = '¡Es correcto!';
                 } else {
@@ -107,7 +114,7 @@ function application() {
     }
 
     function start() {
-        var seconds = '';
+        var seconds;
         var counter = setInterval(questionTimer, 1000);
         var nextQuestionButton = document.querySelector('.next-question');
         var sendAnswerButton = document.querySelector('.send-answer');
