@@ -45,47 +45,39 @@ function application() {
         callback(serverData);
     }
 
-    // variables globales inicialmente asignadas:
     var questions = [];
     var i = 0;
     var initialTime = 20;
     var scorePoints = 0;
     var rightAnswers = 0;
     var wrongAnswers = 0;
-    // variables globales declaradas:
     var answerTime;
     var timerId;
     var seconds;
-    // variables identificadoras de elementos de la página:
     var quizQuestion = document.querySelector('.quiz-questions');
     var msg = document.querySelector('.msg');
     var rightAnswersStatistics = document.querySelector('.correct-answer');
     var wrongAnswersStatistics = document.querySelector('.failed-answer');
     var averageSpeedStatistics = document.querySelector('.statistics-time');
 
-    // asignación de las preguntas
     getPairQuestionAnswers(function (data) {
         questions = data;
     });
 
 
-    // temporizador
     function questionTimer() {
         seconds--;
         var timer = document.querySelector('.timer');
         timer.innerHTML = seconds;
         if (seconds === 0) {
-            // seconds = 5;
             nextQuestion();
         }
     }
 
-    // calculadora de tiempo de respuesta
     function getAnswerTime() {
         answerTime = 100 - seconds;
         console.log(answerTime);
     }
-    // función que pinta la pregunta
     function nextQuestion() {
         msg.innerHTML = '';
         var quizContainer = document.querySelector('.show-quiz');
@@ -109,7 +101,6 @@ function application() {
 
     }
 
-    // función que compara la respuesta
     function checkOption() {
         var currentAnswers = document.getElementsByTagName('input');
         var currentAnswerId;
@@ -118,7 +109,6 @@ function application() {
         for (var i = 0; i < currentAnswers.length; i++) {
             answerTime = initialTime - seconds;
             if (currentAnswers[i].checked) {
-                // clearInterval(timerId);
                 currentAnswerId = currentAnswers[i].id;
                 if (questions[currentQuestionId].correctAnswer.id == currentAnswerId) {
                     msg.innerHTML = '¡Es correcto!';
@@ -160,7 +150,6 @@ function application() {
 
     }
 
-    // función que calcula la velocidad promedio
     function averageSpeed() {
         var counter = 0;
         counter += answerTime;

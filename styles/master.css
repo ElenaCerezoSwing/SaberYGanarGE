@@ -41,6 +41,12 @@
 .statistics {
 	margin-top: 50px;
 }
+.correct-answer{
+	color: green;
+}
+.failed-answer{
+	color:red;
+}
 @media all and (min-width: 768px) {
 	.wrapper {
 		grid-template-columns: 1fr 1fr;
