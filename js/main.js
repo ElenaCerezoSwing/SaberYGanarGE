@@ -48,6 +48,8 @@ function application() {
     // variables globales inicialmente asignadas:
     var questions = [];
     var i = 0;
+    var initialTime = 20;
+    var scorePoints = 0;
     // variables globales declaradas:
     var answerTime;
     var timerId;
@@ -85,13 +87,11 @@ function application() {
         var quizAnswers = document.querySelector('.quiz-answers');
         if (i >= questions.length) {
             clearInterval(timerId);
-            quizContainer.classList.add('hidden')
-                // timer.innerHTML = '';
-                ;
+            quizContainer.classList.add('hidden');
         }
 
         if (i < questions.length) {
-            seconds = 5;
+            seconds = initialTime;
             quizQuestion.innerHTML = questions[i].question;
             quizQuestion.setAttribute('id', questions[i].id);
             var answersList = "";
@@ -111,16 +111,40 @@ function application() {
         var currentQuestionId = quizQuestion.getAttribute('id');
 
         for (var i = 0; i < currentAnswers.length; i++) {
+            answerTime = initialTime - seconds;
             if (currentAnswers[i].checked) {
                 currentAnswerId = currentAnswers[i].id;
                 if (questions[currentQuestionId].correctAnswer.id == currentAnswerId) {
                     msg.innerHTML = '¡Es correcto!';
+                    answerTime = initialTime - seconds;
+                    if (answerTime <= 2) {
+                        scorePoints += 2;
+                    }
+                    if (answerTime > 2 && answerTime <= 10) {
+                        scorePoints += 1;
+                    }
+                    if (answerTime > 10 && answerTime < 20) {
+                        scorePoints += 0;
+                    }
+
                 } else {
                     msg.innerHTML = '¡Es falso!';
-
+                    if (answerTime <= 10) {
+                        scorePoints -= 1;
+                    }
+                    if (answerTime > 10 && answerTime <= 20) {
+                        scorePoints -= 2;
+                    }
                 }
+
+
+
+                console.log(answerTime);
                 console.log(currentAnswerId);
+                console.log(scorePoints);
+
                 return currentAnswerId;
+
             };
         }
 
