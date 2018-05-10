@@ -85,7 +85,9 @@ function application() {
         var quizAnswers = document.querySelector('.quiz-answers');
         if (i >= questions.length) {
             clearInterval(timerId);
-            timer.innerHTML = '';
+            quizContainer.classList.add('hidden')
+                // timer.innerHTML = '';
+                ;
         }
 
         if (i < questions.length) {
@@ -124,6 +126,10 @@ function application() {
 
     }
 
+    // function resetScreenAndShowScores() {
+    //     if (que)
+    // }
+
     // función que inicializa
     function start() {
         seconds = '';
@@ -140,6 +146,7 @@ function application() {
         start: start,
         nextQuestion: nextQuestion,
         questionTimer: questionTimer,
-        checkOption: checkOption
+        checkOption: checkOption,
+        getAnswerTime: getAnswerTime
     }
 }
