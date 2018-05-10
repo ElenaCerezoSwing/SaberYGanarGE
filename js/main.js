@@ -50,6 +50,8 @@ function application() {
     var i = 0;
     var initialTime = 20;
     var scorePoints = 0;
+    var rightAnswers = 0;
+    var wrongAnswers = 0;
     // variables globales declaradas:
     var answerTime;
     var timerId;
@@ -57,6 +59,9 @@ function application() {
     // variables identificadoras de elementos de la página:
     var quizQuestion = document.querySelector('.quiz-questions');
     var msg = document.querySelector('.msg');
+    var rightAnswersStatistics = document.querySelector('.correct-answer');
+    var wrongAnswersStatistics = document.querySelector('.failed-answer');
+    var averageSpeedStatistics = document.querySelector('.statistics-time');
 
     // asignación de las preguntas
     getPairQuestionAnswers(function (data) {
@@ -93,7 +98,7 @@ function application() {
         if (i < questions.length) {
             seconds = initialTime;
             quizQuestion.innerHTML = questions[i].question;
-            quizQuestion.setAttribute('id', questions[i].id);
+            quizQuestion.setAttribute('data-id', questions[i].id);
             var answersList = "";
             for (let x = 0; x < questions[i].answers.length; x++) {
                 answersList += '<li id="' + x + '" class="li-answers"><input id="' + x + '" type="radio" name="answers"/><label for="' + x + '">' + questions[i].answers[x].value + '</label></li>';
@@ -108,14 +113,16 @@ function application() {
     function checkOption() {
         var currentAnswers = document.getElementsByTagName('input');
         var currentAnswerId;
-        var currentQuestionId = quizQuestion.getAttribute('id');
+        var currentQuestionId = quizQuestion.getAttribute('data-id');
 
         for (var i = 0; i < currentAnswers.length; i++) {
             answerTime = initialTime - seconds;
             if (currentAnswers[i].checked) {
+                // clearInterval(timerId);
                 currentAnswerId = currentAnswers[i].id;
                 if (questions[currentQuestionId].correctAnswer.id == currentAnswerId) {
                     msg.innerHTML = '¡Es correcto!';
+                    rightAnswers += 1;
                     answerTime = initialTime - seconds;
                     if (answerTime <= 2) {
                         scorePoints += 2;
@@ -129,6 +136,7 @@ function application() {
 
                 } else {
                     msg.innerHTML = '¡Es falso!';
+                    wrongAnswers += 1;
                     if (answerTime <= 10) {
                         scorePoints -= 1;
                     }
@@ -136,7 +144,9 @@ function application() {
                         scorePoints -= 2;
                     }
                 }
-
+                rightAnswersStatistics.innerHTML = rightAnswers;
+                wrongAnswersStatistics.innerHTML = wrongAnswers;
+                averageSpeedStatistics.innerHTML = averageSpeed();
 
 
                 console.log(answerTime);
@@ -150,9 +160,13 @@ function application() {
 
     }
 
-    // function resetScreenAndShowScores() {
-    //     if (que)
-    // }
+    // función que calcula la velocidad promedio
+    function averageSpeed() {
+        var counter = 0;
+        counter += answerTime;
+        var averageSpeedResult = (counter / (questions.length + 1))
+        return averageSpeedResult;
+    }
 
     // función que inicializa
     function start() {
