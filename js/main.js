@@ -46,7 +46,7 @@ function application() {
     }
 
     var questions = [];
-    var i = 0;
+    var questionsIndex = -1;
     var initialTime = 20;
     var scorePoints = 0;
     var rightAnswers = 0;
@@ -54,51 +54,114 @@ function application() {
     var answerTime;
     var timerId;
     var seconds;
+    var timer;
     var quizQuestion = document.querySelector('.quiz-questions');
     var msg = document.querySelector('.msg');
     var rightAnswersStatistics = document.querySelector('.correct-answer');
     var wrongAnswersStatistics = document.querySelector('.failed-answer');
     var averageSpeedStatistics = document.querySelector('.statistics-time');
-
-    getPairQuestionAnswers(function (data) {
-        questions = data;
-    });
+    var mainWrapper = document.querySelector('.wrapper');
+    var playGameButton = document.getElementById('play-game-button');
 
 
-    function questionTimer() {
-        seconds--;
-        var timer = document.querySelector('.timer');
+
+    function start() {
+        getPairQuestionAnswers(function (data) {
+            questions = data;
+        });
+
+        seconds = '';
+        timer = document.querySelector('.timer');
+        timer.innerHTML = '';
+        var nextQuestionButton = document.querySelector('.next-question');
+        var sendAnswerButton = document.querySelector('.send-answer');
+        sendAnswerButton.addEventListener('click', checkOption);
+        nextQuestionButton.addEventListener('click', onNextQuestion);
+        playGameButton.addEventListener('click', onStartGame);
+
+
+    }
+
+    function onStartGame() {
+        mainWrapper.classList.remove('hidden');
+        playGameButton.classList.add('hidden');
+        startTimer();
+        timerId = setInterval(function () {
+            seconds--;
+            if (seconds > 0) {
+                renderTime();
+            }
+
+            else if (seconds === 0) {
+                onTimeOut();
+            }
+        }, 1000);
+        onNextQuestion();
+    }
+    function startTimer() {
+        seconds = 20;
+    }
+
+    function resetCountDown() {
+        clearInterval(timerId);
+        seconds = 20;
+    }
+
+    function renderTime() {
         timer.innerHTML = seconds;
-        if (seconds === 0) {
-            nextQuestion();
+    }
+
+
+    function onTimeOut() {
+        onNextQuestion();
+        if (questionsIndex > questions.length) {
+            quizContainer.classList.add('hidden');
+            clearInterval(timerId);
         }
     }
 
     function getAnswerTime() {
-        answerTime = 100 - seconds;
+        answerTime = 20 - seconds;
         console.log(answerTime);
     }
-    function nextQuestion() {
-        msg.innerHTML = '';
+
+    function onNextQuestion() {
+        startTimer();
+        questionsIndex++;
+        renderQuestion(questions[questionsIndex]);
+
+    }
+
+
+    function renderQuestion(question) {
+        resetMessage();
         var quizContainer = document.querySelector('.show-quiz');
         var quizAnswers = document.querySelector('.quiz-answers');
-        if (i >= questions.length) {
-            clearInterval(timerId);
+        if (questionsIndex >= questions.length) {
             quizContainer.classList.add('hidden');
         }
 
-        if (i < questions.length) {
-            seconds = initialTime;
-            quizQuestion.innerHTML = questions[i].question;
-            quizQuestion.setAttribute('data-id', questions[i].id);
+        if (questionsIndex < questions.length) {
+            quizQuestion.innerHTML = question.question;
+            quizQuestion.setAttribute('data-id', question.id);
             var answersList = "";
-            for (let x = 0; x < questions[i].answers.length; x++) {
-                answersList += '<li id="' + x + '" class="li-answers"><input id="' + x + '" type="radio" name="answers"/><label for="' + x + '">' + questions[i].answers[x].value + '</label></li>';
+            for (let x = 0; x < question.answers.length; x++) {
+                answersList += '<li id="' + x + '" class="li-answers"><input id="' + x + '" type="radio" name="answers"/><label for="' + x + '">' + questions[questionsIndex].answers[x].value + '</label></li>';
                 quizAnswers.innerHTML = answersList;
             }
-            i++;
         }
 
+    }
+
+    function resetMessage() {
+        msg.innerHTML = '';
+    }
+
+    function hitMessage() {
+        msg.innerHTML = '¡Es correcto!';
+    }
+    function failMessage() {
+        msg.innerHTML = '¡Es falso!';
     }
 
     function checkOption() {
@@ -107,13 +170,13 @@ function application() {
         var currentQuestionId = quizQuestion.getAttribute('data-id');
 
         for (var i = 0; i < currentAnswers.length; i++) {
-            answerTime = initialTime - seconds;
+            answerTime = 20 - seconds;
             if (currentAnswers[i].checked) {
                 currentAnswerId = currentAnswers[i].id;
                 if (questions[currentQuestionId].correctAnswer.id == currentAnswerId) {
-                    msg.innerHTML = '¡Es correcto!';
+                    hitMessage();
                     rightAnswers += 1;
-                    answerTime = initialTime - seconds;
+                    answerTime = 20 - seconds;
                     if (answerTime <= 2) {
                         scorePoints += 2;
                     }
@@ -125,7 +188,7 @@ function application() {
                     }
 
                 } else {
-                    msg.innerHTML = '¡Es falso!';
+                    failMessage();
                     wrongAnswers += 1;
                     if (answerTime <= 10) {
                         scorePoints -= 1;
@@ -158,22 +221,9 @@ function application() {
     }
 
     // función que inicializa
-    function start() {
-        seconds = '';
-        timerId = setInterval(questionTimer, 1000);
-        var timer = document.querySelector('.timer');
-        timer.innerHTML = '';
-        var nextQuestionButton = document.querySelector('.next-question');
-        var sendAnswerButton = document.querySelector('.send-answer');
-        sendAnswerButton.addEventListener('click', checkOption);
-        nextQuestionButton.addEventListener('click', nextQuestion);
-    }
+
 
     return {
-        start: start,
-        nextQuestion: nextQuestion,
-        questionTimer: questionTimer,
-        checkOption: checkOption,
-        getAnswerTime: getAnswerTime
+        start: start
     }
 }
