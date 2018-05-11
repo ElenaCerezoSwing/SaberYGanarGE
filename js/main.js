@@ -60,8 +60,14 @@ function application() {
     var rightAnswersStatistics = document.querySelector('.correct-answer');
     var wrongAnswersStatistics = document.querySelector('.failed-answer');
     var averageSpeedStatistics = document.querySelector('.statistics-time');
-    var mainWrapper = document.querySelector('.wrapper');
     var playGameButton = document.getElementById('play-game-button');
+    var quizContainer = document.querySelector('.show-quiz');
+    var nextQuestionButton = document.querySelector('.next-question');
+    var sendAnswerButton = document.querySelector('.send-answer');
+    sendAnswerButton.addEventListener('click', checkOption);
+    var mainWrapper;
+    nextQuestionButton.addEventListener('click', onNextQuestion);
+
 
 
 
@@ -69,15 +75,12 @@ function application() {
         getPairQuestionAnswers(function (data) {
             questions = data;
         });
-
         seconds = '';
         timer = document.querySelector('.timer');
         timer.innerHTML = '';
-        var nextQuestionButton = document.querySelector('.next-question');
-        var sendAnswerButton = document.querySelector('.send-answer');
-        sendAnswerButton.addEventListener('click', checkOption);
-        nextQuestionButton.addEventListener('click', onNextQuestion);
         playGameButton.addEventListener('click', onStartGame);
+        mainWrapper = document.querySelector('.wrapper');
+        mainWrapper.classList.add('hidden');
 
 
     }
